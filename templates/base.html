@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  {% load static %}
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    />
+    
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/logo.svg' %}">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>QuizZone: {% block page %}{% endblock %}</title>
+  </head>
+
+  <body
+    class="w-[100vw] min-h-[100vh] bg-[#f4f8fd] flex items-center justify-center overflow-x-hidden"
+  >
+    <div
+      class="w-[480px] bg-white overflow-hidden border border-[#e5edf6] rounded-xl shadow-[0_4px_18px_rgba(30,80,140,0.12)] flex items-center flex-col mx-0.5 my-4"
+    >
+      <div
+        class="w-full px-6 py-4 border-b border-[#e5edf6] flex items-center font-bold gap-2"
+      >
+        <i class="fa-solid fa-puzzle-piece text-2xl text-[var(--primary)]"></i>
+        <p>QuizZone</p>
+      </div>
+
+      <div class="w-full px-1 sm:px-6">
+        {% block content %}{% endblock %}
+      </div>
+
+      <div
+        class="w-full flex flex-col gap-2 border-t border-[#e5edf6] pt-3 pb-5"
+      >
+        <div class="flex items-center justify-center font-bold gap-2">
+          <i
+            class="fa-solid fa-puzzle-piece text-2xl text-[var(--primary)]"
+          ></i>
+          <p>QuizZone</p>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <p class="text-xs text-[var(--text-secondary)]">
+            Learn · Grow · Be Curious
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {% block script %}{% endblock %}
+  </body>
+</html>

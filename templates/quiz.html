@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block page %}Quiz Page{% endblock %}
+{% block content %}
+<div
+  class="flex items-center justify-between w-full border border-[var(--border)] px-4 py-3 rounded-md my-4"
+>
+  <div class="flex gap-2">
+    <div
+      class="flex items-center justify-center aspect-square h-10 text-xl text-white rounded-md bg-[var(--subject-color)] {{ category }}"
+    >
+      {% if category == "science" %}
+      <i class="fa-solid fa-flask"></i>
+      {% elif category == "technology" %}
+      <i class="fa-solid fa-microchip"></i>
+      {% elif category == "history" %}
+      <i class="fa-solid fa-landmark"></i>
+      {% elif category == "geography" %}
+      <i class="fa-solid fa-earth-americas"></i>
+      {% endif %}
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm">{{ category|capfirst }} Quiz</p>
+      <p class="text-xs text-[var(--text-secondary)]">10 questions</p>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-end gap-2">
+    <div class="bg-[#f1f5fa] text-[#607a9f] text-xs rounded-lg px-3 py-0.5">
+      <p><span id="count">1</span> / 10</p>
+    </div>
+
+    <div class="w-36 h-1.5 bg-[#f1f5fa] rounded-md">
+      <div id="progress" class="h-full w-[10%] bg-blue-400 rounded-md"></div>
+    </div>
+  </div>
+</div>
+
+<div class="flex items-center justify-center mb-4">
+  <form
+    action="/result/"
+    method="post"
+    class="flex items-center justify-center flex-col w-full rounded-md p-4 border border-[var(--border)]"
+  >
+    <div class="w-full flex overflow-hidden">
+      {% csrf_token %} {% for item in data %}
+      <div class="min-w-full duration-500 card">
+        <p
+          class="w-fit px-3 py-1 mb-2 text-[var(--primary-dark)] text-xs font-semibold rounded-xl bg-[var(--primary-dark)]/25"
+        >
+          Question {{ forloop.counter }}
+        </p>
+
+        <p class="font-bold text-lg">{{ item.question }}</p>
+        <input type="hidden" name="question-id" value="{{ item.id }}" />
+
+        {% for key, value in item.options.items %}
+        <label for="{{item.id}}-{{ key }}">
+          <input
+            type="radio"
+            name="{{ item.id }}"
+            id="{{item.id}}-{{ key }}"
+            value="{{ key }}"
+          />
+
+          <div
+            class="my-2 px-4 py-3.5 flex items-center gap-4 border border-[var(--border)] rounded-md content"
+          >
+            <div
+              class="flex items-center justify-center border border-black h-4 rounded-full aspect-square radio"
+            >
+              <div class="h-2 aspect-square rounded-full bg-white"></div>
+            </div>
+
+            <p
+              class="flex items-center justify-center text-xs h-5 aspect-square rounded-full font-semibold bg-[var(--text-secondary)]/10 key"
+            >
+              {{ key }}
+            </p>
+            <p class="text-sm">{{ value }}</p>
+          </div>
+        </label>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <hr class="w-full h-[1px] bg-[var(--border)] border-0" />
+
+    <div class="w-full mt-3 mb-2 flex items-center justify-between">
+      <div id="btn-empty"></div>
+
+      <button
+        type="button"
+        id="btn-prev"
+        class="w-27 h-9 cursor-pointer text-xs rounded-3xl bg-[#f2f6fb] text-[#587292] hidden"
+        onclick="prev()"
+      >
+        <i class="fa-solid fa-angle-left"></i>
+        Previous
+      </button>
+
+      <button
+        type="button"
+        id="btn-next"
+        class="w-27 h-9 cursor-pointer text-xs rounded-3xl bg-[#2077f5] text-white"
+        onclick="next()"
+      >
+        Next
+        <i class="fa-solid fa-angle-right"></i>
+      </button>
+
+      <button
+        type="submit"
+        id="btn-submit"
+        class="w-27 h-9 cursor-pointer text-xs rounded-3xl bg-[#2077f5] text-white hidden"
+      >
+        Submit
+      </button>
+    </div>
+
+    <div class="w-full my-3 flex items-center justify-between">
+      {% for item in data %}
+      <button
+        type="button"
+        class="h-6 aspect-square rounded-full text-xs bg-[#f1f5fa] text-[#607a9f] navigator"
+        id="{{ forloop.counter }}"
+        onclick="move(this)"
+      >
+        {{ forloop.counter }}
+      </button>
+      {% endfor %}
+    </div>
+  </form>
+</div>
+{% endblock %} {% block script %}
+<script>
+  let current = 0;
+  document
+    .querySelectorAll("button.navigator")
+    [current].classList.add("active");
+
+  const update = () => {
+    document.querySelector("#count").innerHTML = current + 1;
+    document.querySelector("#progress").style.width = `${(current + 1) * 10}%`;
+
+    document.querySelectorAll(".card").forEach((element) => {
+      element.style.transform = `translateX(-${current * 100}%)`;
+    });
+
+    document
+      .querySelector("#btn-empty")
+      .classList.toggle("hidden", current !== 0);
+    document
+      .querySelector("#btn-prev")
+      .classList.toggle("hidden", current === 0);
+    document
+      .querySelector("#btn-next")
+      .classList.toggle("hidden", current === 9);
+    document
+      .querySelector("#btn-submit")
+      .classList.toggle("hidden", current !== 9);
+
+    document.querySelector("button.active").classList.remove("active");
+    document
+      .querySelectorAll("button.navigator")
+      [current].classList.add("active");
+  };
+
+  const prev = () => {
+    if (current !== 0) current -= 1;
+    update();
+  };
+
+  const next = () => {
+    if (current !== 9) current += 1;
+    update();
+  };
+
+  const move = (e) => {
+    current = parseInt(e.id) - 1;
+    update();
+  };
+</script>
+{% endblock %}

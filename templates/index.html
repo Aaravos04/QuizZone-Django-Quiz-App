@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block page %}Home Page{% endblock %}
+{% block content %} {% load static %}
+<div class="flex items-center justify-content-center flex-col pt-8 pb-6">
+  <p
+    class="bg-[#e7f1ff] text-[#1269d9] py-1 px-5 text-xs font-semibold rounded-xl"
+  >
+    Test Your Knowledge
+  </p>
+  <h2 class="text-3xl font-bold py-2.5">Choose a Category</h2>
+  <p class="text-xs text-[var(--text-secondary)] max-w-64 text-center">
+    Pick a category, answer 10 random question and see how well you do.
+  </p>
+</div>
+
+<div class="flex items-center justify-content-center">
+  <form
+    action="/quiz"
+    method="get"
+    class="flex justify-center flex-wrap gap-2 max-w-full mb-4"
+  >
+    <label for="science" class="cursor-pointer">
+      <input
+        type="submit"
+        id="science"
+        name="category"
+        value="science"
+        class="hidden"
+      />
+
+      <div
+        class="relative overflow-hidden flex-1 sm:w-52 h-36 rounded-md after:absolute after:inset-0 science"
+      >
+        <div
+          class="absolute z-10 bottom-12 left-4 text-xl text-white/90 rounded-lg p-2.5 bg-[var(--subject-color)] aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-flask"></i>
+        </div>
+
+        <img
+          class="flex-1 sm:w-52 h-36 object-cover"
+          src="{% static 'images/science.jfif' %}"
+          alt="science"
+        />
+        <p class="absolute z-10 bottom-4 left-4 text-lg font-bold text-white">
+          Science
+        </p>
+
+        <div
+          class="absolute z-10 bottom-4 right-4 text-[var(--subject-color)] rounded-full p-1 bg-white/90 aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </label>
+
+    <label for="technology" class="cursor-pointer">
+      <input
+        type="submit"
+        id="technology"
+        name="category"
+        value="technology"
+        class="hidden"
+      />
+
+      <div
+        class="relative overflow-hidden flex-1 sm:w-52 h-36 rounded-md after:absolute after:inset-0 technology"
+      >
+        <div
+          class="absolute z-10 bottom-12 left-4 text-xl text-white/90 rounded-lg p-2.5 bg-[var(--subject-color)] aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+
+        <img
+          class="flex-1 sm:w-52 h-36 object-cover"
+          src="{% static 'images/technology.jfif' %}"
+          alt="technology"
+        />
+        <p class="absolute z-10 bottom-4 left-4 text-lg font-bold text-white">
+          Technology
+        </p>
+
+        <div
+          class="absolute z-10 bottom-4 right-4 text-[var(--subject-color)] rounded-full p-1 bg-white/90 aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </label>
+
+    <label for="history" class="cursor-pointer">
+      <input
+        type="submit"
+        id="history"
+        name="category"
+        value="history"
+        class="hidden"
+      />
+
+      <div
+        class="relative overflow-hidden flex-1 sm:w-52 h-36 rounded-md after:absolute after:inset-0 history"
+      >
+        <div
+          class="absolute z-10 bottom-12 left-4 text-xl text-white/90 rounded-lg p-2.5 bg-[var(--subject-color)] aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+
+        <img
+          class="flex-1 sm:w-52 h-36 object-cover"
+          src="{% static 'images/history.jfif' %}"
+          alt="history"
+        />
+        <p class="absolute z-10 bottom-4 left-4 text-lg font-bold text-white">
+          History
+        </p>
+
+        <div
+          class="absolute z-10 bottom-4 right-4 text-[var(--subject-color)] rounded-full p-1 bg-white/90 aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </label>
+
+    <label for="geography" class="cursor-pointer">
+      <input
+        type="submit"
+        id="geography"
+        name="category"
+        value="geography"
+        class="hidden"
+      />
+
+      <div
+        class="relative overflow-hidden flex-1 sm:w-52 h-36 rounded-md after:absolute after:inset-0 geography"
+      >
+        <div
+          class="absolute z-10 bottom-12 left-4 text-xl text-white/90 rounded-lg p-2.5 bg-[var(--subject-color)] aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-earth-americas"></i>
+        </div>
+
+        <img
+          class="flex-1 sm:w-52 h-36 object-cover"
+          src="{% static 'images/geography.jfif' %}"
+          alt="geography"
+        />
+        <p class="absolute z-10 bottom-4 left-4 text-lg font-bold text-white">
+          Geography
+        </p>
+
+        <div
+          class="absolute z-10 bottom-4 right-4 text-[var(--subject-color)] rounded-full p-1 bg-white/90 aspect-square flex items-center justify-content-center"
+        >
+          <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </label>
+  </form>
+</div>
+{% endblock %}

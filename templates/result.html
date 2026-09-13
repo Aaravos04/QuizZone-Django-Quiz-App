@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block page %}Result Page{% endblock %}
+{% block content %}
+<div class="flex items-center justify-center flex-col py-6">
+  <div
+    class="flex items-center justify-center text-2xl text-[#09a67a] bg-[#09a67a]/25 p-3 aspect-square rounded-full"
+  >
+    <i class="fa-solid fa-trophy"></i>
+  </div>
+
+  <p class="text-xl font-bold mt-2 mb-0.5">Quiz Completed!</p>
+  <p class="text-xs text-[var(--text-secondary)]">
+    Here's how you did on the Quiz.
+  </p>
+</div>
+
+<div class="flex items-center justify-center">
+  <div
+    class="flex items-center justify-center w-full mx-1 py-3 border border-[var(--border)] rounded-md"
+  >
+    <div class="flex-1 flex items-center justify-center flex-col gap-0.5">
+      <p class="text-xs text-[var(--text-secondary)]">Score</p>
+      <p class="text-lg font-bold">{{ info.correct }} / 10</p>
+      <p class="font-bold text-[var(--success)]">{{ info.percent }}%</p>
+    </div>
+    <div class="h-12 border border-[var(--border)]"></div>
+
+    <div class="flex-1 flex items-center justify-center flex-col gap-0.5">
+      <p class="text-xs text-[var(--text-secondary)]">Correct</p>
+      <p class="text-lg font-bold">{{ info.correct }}</p>
+      <i class="fa-solid fa-circle-check icons text-[var(--success)]"></i>
+    </div>
+    <div class="h-12 border border-[var(--border)]"></div>
+
+    <div class="flex-1 flex items-center justify-center flex-col gap-0.5">
+      <p class="text-xs text-[var(--text-secondary)]">Incorrect</p>
+      <p class="text-lg font-bold">{{ info.incorrect }}</p>
+      <i class="fa-solid fa-circle-xmark icons text-[var(--error)]"></i>
+    </div>
+    <div class="h-12 border border-[var(--border)]"></div>
+
+    <div class="flex-1 flex items-center justify-center flex-col gap-0.5">
+      <p class="text-xs text-[var(--text-secondary)]">Unanswered</p>
+      <p class="text-lg font-bold">{{ info.unanswered }}</p>
+      <i class="fa-solid fa-circle-minus icons text-[var(--neutral)]"></i>
+    </div>
+  </div>
+</div>
+
+<div class="pt-4 w-full">
+  <p class="text-sm font-bold">Question Review</p>
+    {% csrf_token %} {% for item in data %}
+  <div class="w-full border rounded-md my-1 px-3 py-1.5 text-xs flex items-center justify-between gap-3
+    {% if item.verdict == "correct" %}bg-[var(--success)]/10 border-[var(--success)]/25 text-[var(--success)]{% endif %}
+    {% if item.verdict == "incorrect" %}bg-[var(--error)]/10 border-[var(--error)]/25 text-[var(--error)]{% endif %}
+    {% if item.verdict == "unanswered" %}bg-[var(--neutral)]/10 border-[var(--neutral)]/25 text-[var(--neutral)]{% endif %}">
+
+    <div class="h-6 flex items-center justify-center font-semibold aspect-square rounded-full
+      {% if item.verdict == "correct" %}bg-[var(--success)]/25{% endif %}
+      {% if item.verdict == "incorrect" %}bg-[var(--error)]/25{% endif %}
+      {% if item.verdict == "unanswered" %}bg-[var(--neutral)]/25{% endif %}">
+        {{ forloop.counter }}
+    </div>
+
+    <div class="flex-2">
+        <p class="text-left text-black/65 font-medium">{{ item.question }}</p>
+
+        {% if item.verdict == "unanswered" %}
+        <p class="text-[10px] text-[var(--text-secondary)]">
+            You didn't answer this question.
+        </p>
+        {% else %}
+        <p class="text-[10px]">
+            <span class="text-[var(--text-secondary)]">Your Answer: </span>
+            {{ item.answer }} ({{ item.user_answer }})
+        </p>
+        {% endif %}
+    </div>
+
+    <div class="flex-1">
+        <p class="font-medium">
+            {% if item.verdict == "correct" %}
+            <i class="fa-solid fa-circle-check text-[var(--success)]"></i>
+            {% elif item.verdict == "incorrect" %}
+            <i class="fa-solid fa-circle-xmark text-[var(--error)]"></i>
+            {% elif item.verdict == "unanswered" %}
+            <i class="fa-solid fa-circle-minus text-[var(--neutral)]"></i>
+            {% endif %}
+            {{ item.verdict|capfirst }}
+        </p>
+
+        {% if item.verdict != "correct" %}
+        <p class="text-[10px]">Correct Answer: {{ item.correct }} ({{ item.correct_answer }})</p>
+        {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<a
+  href="/"
+  class="my-4 px-6 py-2 text-xs bg-[#2077f5] text-white rounded-md flex items-center justify-center gap-2"
+  ><i class="fa-solid fa-house"></i>Back to Home</a
+>
+{% endblock %}

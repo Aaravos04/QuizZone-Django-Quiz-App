@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.science {
+  --subject-color: var(--science);
+}
+
+.technology {
+  --subject-color: var(--technology);
+}
+
+.history {
+  --subject-color: var(--history);
+}
+
+.geography {
+  --subject-color: var(--geography);
+}
+
+.science::after,
+.technology::after,
+.history::after,
+.geography::after {
+  background: color-mix(in srgb, var(--subject-color) 60%, transparent 40%);
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + .content {
+  border-color: #2077f5;
+  background-color: #eaf3ff;
+}
+
+input[type="radio"]:checked + .content > .radio {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+input[type="radio"]:checked + .content > .key {
+  background: #d9eafc;
+  color: #1474e8;
+}
+
+.active {
+  background: #2077f5;
+  color: white;
+}
+
+:root {
+  /* =========================
+       Brand
+    ========================= */
+
+  --primary: #2077f5;
+  --primary-dark: #1268e8;
+  --primary-light: #e8f2ff;
+  --primary-pale: #f2f7fe;
+
+  /* =========================
+       Text
+    ========================= */
+
+  --text-primary: #07143d;
+  --text-secondary: #607a9f;
+  --text-muted: #8195b2;
+
+  /* =========================
+       Surfaces
+    ========================= */
+
+  --background: #f4f8fd;
+  --surface: #ffffff;
+  --surface-soft: #fafcff;
+
+  /* =========================
+       Borders
+    ========================= */
+
+  --border: #dce7f3;
+  --border-light: #e8eff7;
+
+  /* =========================
+       Success
+    ========================= */
+
+  --success: #08a47d;
+  --success-bg: #e9f8f4;
+  --success-border: #cdede4;
+
+  /* =========================
+       Error
+    ========================= */
+
+  --error: #f34f58;
+  --error-bg: #fef0f1;
+  --error-border: #f8d5d7;
+
+  /* =========================
+       Unanswered
+    ========================= */
+
+  --neutral: #7185a3;
+  --neutral-bg: #f0f4f9;
+  --neutral-border: #dce5ef;
+
+  /* =========================
+       Category accents
+    ========================= */
+
+  --science: #0875e8;
+  --technology: #6330c8;
+  --history: #c67a27;
+  --geography: #078f8d;
+
+  /* =========================
+       Radius
+    ========================= */
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-pill: 999px;
+
+  /* =========================
+       Shadows
+    ========================= */
+
+  --shadow-sm: 0 2px 8px rgba(30, 80, 140, 0.05);
+
+  --shadow-md: 0 4px 18px rgba(30, 80, 140, 0.08);
+
+  --shadow-lg: 0 8px 30px rgba(30, 80, 140, 0.1);
+
+  /* =========================
+       Typography
+    ========================= */
+
+  --font-family: "Inter", sans-serif;
+
+  /* =========================
+       Spacing
+    ========================= */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+}
